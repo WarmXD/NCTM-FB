@@ -1,8 +1,5 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'dart:convert';
 
 class HomePagee extends StatefulWidget {
   const HomePagee({super.key});
@@ -61,13 +58,13 @@ class _HomePageeState extends State<HomePagee> {
                               if (snapshot.hasData) {
                                 return Text(
                                   snapshot.data.toString(),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 60,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 );
                               } else {
-                                return Text(
+                                return const Text(
                                   '0',
                                   style: TextStyle(
                                     fontSize: 60,
@@ -76,7 +73,7 @@ class _HomePageeState extends State<HomePagee> {
                                 );
                               }
                             }),
-                        Text(
+                        const Text(
                           "TOTAL CHILD",
                           style: TextStyle(
                             fontSize: 25,
@@ -191,7 +188,6 @@ class _HomePageeState extends State<HomePagee> {
           (res) => t_babies = res.size,
           onError: (e) => print("Error completing: $e"),
         );
-    print(t_babies);
     return t_babies;
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class BabyFour extends StatefulWidget {
   const BabyFour({super.key});
@@ -18,12 +19,28 @@ class _BabyFourState extends State<BabyFour> {
         children: <Widget>[
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text(
-                "Baby 4",
-                style: TextStyle(fontSize: 35),
-              ),
-              SizedBox(width: 870),
+            children: [
+              FutureBuilder<String>(
+                  future: getName(),
+                  builder:
+                      (BuildContext context, AsyncSnapshot<String> snapshot) {
+                    if (snapshot.hasData) {
+                      return Text(
+                        snapshot.data.toString(),
+                        style: const TextStyle(
+                          fontSize: 35,
+                        ),
+                      );
+                    } else {
+                      return const Text(
+                        'No Baby',
+                        style: TextStyle(
+                          fontSize: 35,
+                        ),
+                      );
+                    }
+                  }),
+              SizedBox(width: 500),
               Text(
                 "Temperature Monitoring",
                 style: TextStyle(fontSize: 35),
@@ -93,5 +110,17 @@ class _BabyFourState extends State<BabyFour> {
         ],
       ),
     );
+  }
+
+  Future<String> getName() async {
+    List<String> names = [];
+    //Map<String, dynamic> user = jsonDecode(jsonString);
+    await FirebaseFirestore.instance.collection("Babies").get().then((event) {
+      for (final doc in event.docs) {
+        names.add(doc.data()['Fname'] + " " + doc.data()['Lname']);
+      }
+    });
+
+    return names.length > 3 ? names[3] : 'No Baby';
   }
 }

@@ -9,7 +9,6 @@ class BabyOne extends StatefulWidget {
 }
 
 class _BabyOneState extends State<BabyOne> {
-  var db = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -20,12 +19,28 @@ class _BabyOneState extends State<BabyOne> {
         children: <Widget>[
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text(
-                "Baby 1",
-                style: TextStyle(fontSize: 35),
-              ),
-              SizedBox(width: 870),
+            children: [
+              FutureBuilder<String>(
+                  future: getName(),
+                  builder:
+                      (BuildContext context, AsyncSnapshot<String> snapshot) {
+                    if (snapshot.hasData) {
+                      return Text(
+                        snapshot.data.toString(),
+                        style: const TextStyle(
+                          fontSize: 35,
+                        ),
+                      );
+                    } else {
+                      return const Text(
+                        'No Baby',
+                        style: TextStyle(
+                          fontSize: 35,
+                        ),
+                      );
+                    }
+                  }),
+              SizedBox(width: 500),
               Text(
                 "Temperature Monitoring",
                 style: TextStyle(fontSize: 35),
@@ -91,9 +106,51 @@ class _BabyOneState extends State<BabyOne> {
                 ),
               ),
             ],
-          )
+          ),
+          ElevatedButton(
+            style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(
+                    Color.fromARGB(255, 239, 106, 62))),
+            child: const Text("Remove Baby"),
+            onPressed: () {
+              setState(() {
+                DocumentReference _documentReference = FirebaseFirestore
+                    .instance
+                    .collection('Babies')
+                    .doc(getID().toString());
+
+                _documentReference.delete();
+                print(getID().toString());
+              });
+            },
+          ),
         ],
       ),
     );
+  }
+
+  Future<String> getName() async {
+    List<String> names = [];
+    //Map<String, dynamic> user = jsonDecode(jsonString);
+    await FirebaseFirestore.instance.collection("Babies").get().then((event) {
+      for (final doc in event.docs) {
+        names.add(doc.data()['Fname'] + " " + doc.data()['Lname']);
+      }
+    });
+
+    return names.length > 0 ? names[0] : 'No Baby';
+  }
+
+  Future<String> getID() async {
+    List<String> id = [];
+
+    //Map<String, dynamic> user = jsonDecode(jsonString);
+    await FirebaseFirestore.instance.collection("Babies").get().then((event) {
+      for (final doc in event.docs) {
+        id.add(doc.data()['ID']);
+      }
+    });
+
+    return id.length > 0 ? id[0] : 'No Id';
   }
 }

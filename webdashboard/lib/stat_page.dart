@@ -4,6 +4,7 @@ import 'package:webdashboard/babies/baby2.dart';
 import 'package:webdashboard/babies/baby3.dart';
 import 'package:webdashboard/babies/baby4.dart';
 import 'package:webdashboard/babies/baby5.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class StatisticsPagee extends StatefulWidget {
   const StatisticsPagee({super.key});
@@ -60,122 +61,205 @@ class _StatisticsPageeState extends State<StatisticsPagee> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
                           ElevatedButton(
-                            onPressed: () {
-                              setState(() {
-                                index = 0;
-                              });
-                            },
-                            style: ButtonStyle(
-                              overlayColor:
-                                  MaterialStateProperty.resolveWith<Color?>(
-                                (Set<MaterialState> states) {
-                                  if (states.contains(MaterialState.hovered))
-                                    return Color.fromARGB(255, 239, 106, 62);
-                                  return null; // Defer to the widget's default.
-                                },
+                              onPressed: () {
+                                setState(() {
+                                  index = 0;
+                                });
+                              },
+                              style: ButtonStyle(
+                                overlayColor:
+                                    MaterialStateProperty.resolveWith<Color?>(
+                                  (Set<MaterialState> states) {
+                                    if (states.contains(MaterialState.hovered))
+                                      return Color.fromARGB(255, 239, 106, 62);
+                                    return null; // Defer to the widget's default.
+                                  },
+                                ),
+                                backgroundColor: (index == 0)
+                                    ? MaterialStateProperty.all(
+                                        Color.fromARGB(255, 239, 106, 62))
+                                    : MaterialStateProperty.all(Colors.white),
                               ),
-                              backgroundColor: (index == 0)
-                                  ? MaterialStateProperty.all(
-                                      Color.fromARGB(255, 239, 106, 62))
-                                  : MaterialStateProperty.all(Colors.white),
-                            ),
-                            child: const Text(
-                              "Baby 1",
-                              style: TextStyle(fontSize: 25),
-                            ),
-                          ),
+                              child: FutureBuilder<List>(
+                                  future: getName(),
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot<List> snapshot) {
+                                    if (snapshot.data!.length > 0) {
+                                      return Text(
+                                        snapshot.data!.elementAt(0).toString(),
+                                        style: const TextStyle(
+                                          fontSize: 35,
+                                        ),
+                                      );
+                                    } else {
+                                      return const Text(
+                                        'No Baby',
+                                        style: TextStyle(
+                                          fontSize: 35,
+                                        ),
+                                      );
+                                    }
+                                  })),
                           ElevatedButton(
-                            onPressed: () {
-                              setState(() {
-                                index = 1;
-                              });
-                            },
-                            style: ButtonStyle(
-                              overlayColor:
-                                  MaterialStateProperty.resolveWith<Color?>(
-                                (Set<MaterialState> states) {
-                                  if (states.contains(MaterialState.hovered))
-                                    return Color.fromARGB(255, 239, 106, 62);
-                                  return null; // Defer to the widget's default.
-                                },
+                              onPressed: () {
+                                setState(() {
+                                  index = 1;
+                                });
+                              },
+                              style: ButtonStyle(
+                                overlayColor:
+                                    MaterialStateProperty.resolveWith<Color?>(
+                                  (Set<MaterialState> states) {
+                                    if (states.contains(MaterialState.hovered))
+                                      return Color.fromARGB(255, 239, 106, 62);
+                                    return null; // Defer to the widget's default.
+                                  },
+                                ),
+                                backgroundColor: (index == 1)
+                                    ? MaterialStateProperty.all(
+                                        Color.fromARGB(255, 239, 106, 62))
+                                    : MaterialStateProperty.all(Colors.white),
                               ),
-                              backgroundColor: (index == 1)
-                                  ? MaterialStateProperty.all(
-                                      Color.fromARGB(255, 239, 106, 62))
-                                  : MaterialStateProperty.all(Colors.white),
-                            ),
-                            child: const Text("Baby 2",
-                                style: TextStyle(fontSize: 25)),
-                          ),
+                              child: FutureBuilder<List>(
+                                  future: getName(),
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot<List> snapshot) {
+                                    if (snapshot.data!.length > 1) {
+                                      return Text(
+                                        snapshot.data!.elementAt(1).toString(),
+                                        style: const TextStyle(
+                                          fontSize: 35,
+                                        ),
+                                      );
+                                    } else {
+                                      return const Text(
+                                        'No Baby',
+                                        style: TextStyle(
+                                          fontSize: 35,
+                                        ),
+                                      );
+                                    }
+                                  })),
                           ElevatedButton(
-                            onPressed: () {
-                              setState(() {
-                                index = 2;
-                              });
-                            },
-                            style: ButtonStyle(
-                              overlayColor:
-                                  MaterialStateProperty.resolveWith<Color?>(
-                                (Set<MaterialState> states) {
-                                  if (states.contains(MaterialState.hovered))
-                                    return Color.fromARGB(255, 239, 106, 62);
-                                  return null; // Defer to the widget's default.
-                                },
+                              onPressed: () {
+                                setState(() {
+                                  index = 2;
+                                });
+                              },
+                              style: ButtonStyle(
+                                overlayColor:
+                                    MaterialStateProperty.resolveWith<Color?>(
+                                  (Set<MaterialState> states) {
+                                    if (states.contains(MaterialState.hovered))
+                                      return Color.fromARGB(255, 239, 106, 62);
+                                    return null; // Defer to the widget's default.
+                                  },
+                                ),
+                                backgroundColor: (index == 2)
+                                    ? MaterialStateProperty.all(
+                                        Color.fromARGB(255, 239, 106, 62))
+                                    : MaterialStateProperty.all(Colors.white),
                               ),
-                              backgroundColor: (index == 2)
-                                  ? MaterialStateProperty.all(
-                                      Color.fromARGB(255, 239, 106, 62))
-                                  : MaterialStateProperty.all(Colors.white),
-                            ),
-                            child: const Text("Baby 3",
-                                style: TextStyle(fontSize: 25)),
-                          ),
+                              child: FutureBuilder<List>(
+                                  future: getName(),
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot<List> snapshot) {
+                                    if (snapshot.data!.length > 2) {
+                                      return Text(
+                                        snapshot.data!.elementAt(2).toString(),
+                                        style: const TextStyle(
+                                          fontSize: 35,
+                                        ),
+                                      );
+                                    } else {
+                                      return const Text(
+                                        'No Baby',
+                                        style: TextStyle(
+                                          fontSize: 35,
+                                        ),
+                                      );
+                                    }
+                                  })),
                           ElevatedButton(
-                            onPressed: () {
-                              setState(() {
-                                index = 3;
-                              });
-                            },
-                            style: ButtonStyle(
-                              overlayColor:
-                                  MaterialStateProperty.resolveWith<Color?>(
-                                (Set<MaterialState> states) {
-                                  if (states.contains(MaterialState.hovered))
-                                    return Color.fromARGB(255, 239, 106, 62);
-                                  return null; // Defer to the widget's default.
-                                },
+                              onPressed: () {
+                                setState(() {
+                                  index = 3;
+                                });
+                              },
+                              style: ButtonStyle(
+                                overlayColor:
+                                    MaterialStateProperty.resolveWith<Color?>(
+                                  (Set<MaterialState> states) {
+                                    if (states.contains(MaterialState.hovered))
+                                      return Color.fromARGB(255, 239, 106, 62);
+                                    return null; // Defer to the widget's default.
+                                  },
+                                ),
+                                backgroundColor: (index == 3)
+                                    ? MaterialStateProperty.all(
+                                        Color.fromARGB(255, 239, 106, 62))
+                                    : MaterialStateProperty.all(Colors.white),
                               ),
-                              backgroundColor: (index == 3)
-                                  ? MaterialStateProperty.all(
-                                      Color.fromARGB(255, 239, 106, 62))
-                                  : MaterialStateProperty.all(Colors.white),
-                            ),
-                            child: const Text("Baby 4",
-                                style: TextStyle(fontSize: 25)),
-                          ),
+                              child: FutureBuilder<List>(
+                                  future: getName(),
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot<List> snapshot) {
+                                    if (snapshot.data!.length > 3) {
+                                      return Text(
+                                        snapshot.data!.elementAt(3).toString(),
+                                        style: const TextStyle(
+                                          fontSize: 35,
+                                        ),
+                                      );
+                                    } else {
+                                      return const Text(
+                                        'No Baby',
+                                        style: TextStyle(
+                                          fontSize: 35,
+                                        ),
+                                      );
+                                    }
+                                  })),
                           ElevatedButton(
-                            onPressed: () {
-                              setState(() {
-                                index = 4;
-                              });
-                            },
-                            style: ButtonStyle(
-                              overlayColor:
-                                  MaterialStateProperty.resolveWith<Color?>(
-                                (Set<MaterialState> states) {
-                                  if (states.contains(MaterialState.hovered))
-                                    return Color.fromARGB(255, 239, 106, 62);
-                                  return null; // Defer to the widget's default.
-                                },
+                              onPressed: () {
+                                setState(() {
+                                  index = 4;
+                                });
+                              },
+                              style: ButtonStyle(
+                                overlayColor:
+                                    MaterialStateProperty.resolveWith<Color?>(
+                                  (Set<MaterialState> states) {
+                                    if (states.contains(MaterialState.hovered))
+                                      return Color.fromARGB(255, 239, 106, 62);
+                                    return null; // Defer to the widget's default.
+                                  },
+                                ),
+                                backgroundColor: (index == 4)
+                                    ? MaterialStateProperty.all(
+                                        Color.fromARGB(255, 239, 106, 62))
+                                    : MaterialStateProperty.all(Colors.white),
                               ),
-                              backgroundColor: (index == 4)
-                                  ? MaterialStateProperty.all(
-                                      Color.fromARGB(255, 239, 106, 62))
-                                  : MaterialStateProperty.all(Colors.white),
-                            ),
-                            child: const Text("Baby 5",
-                                style: TextStyle(fontSize: 25)),
-                          ),
+                              child: FutureBuilder<List>(
+                                  future: getName(),
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot<List> snapshot) {
+                                    if (snapshot.data!.length > 4) {
+                                      return Text(
+                                        snapshot.data!.elementAt(4).toString(),
+                                        style: const TextStyle(
+                                          fontSize: 35,
+                                        ),
+                                      );
+                                    } else {
+                                      return const Text(
+                                        'No Baby',
+                                        style: TextStyle(
+                                          fontSize: 35,
+                                        ),
+                                      );
+                                    }
+                                  })),
                         ],
                       ),
                     ]),
@@ -184,5 +268,17 @@ class _StatisticsPageeState extends State<StatisticsPagee> {
             ]),
       ),
     );
+  }
+
+  Future<List> getName() async {
+    List<String> names = [];
+    //Map<String, dynamic> user = jsonDecode(jsonString);
+    await FirebaseFirestore.instance.collection("Babies").get().then((event) {
+      for (final doc in event.docs) {
+        names.add(doc.data()['Lname']);
+      }
+    });
+
+    return names;
   }
 }
