@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "182609954574",
+    "project_id": "webdashboard-c6d24",
+    "storage_bucket": "webdashboard-c6d24.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:182609954574:android:d968d233ded7317d5c795f",
+        "android_client_info": {
+          "package_name": "com.example.webdashboard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "182609954574-5eo395galebohv0isaprnrngu5g64vpi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDi-75j1tw2cTmJAN6gSmIhY3EnhiFie24"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "182609954574-5eo395galebohv0isaprnrngu5g64vpi.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "182609954574-ossqjo3grau108lknc5kpap0pbn52vvr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.webdashboard"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
